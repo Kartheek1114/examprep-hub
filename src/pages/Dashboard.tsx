@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { exams } from "@/data/exams";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "@/lib/api";
 import { toast } from "sonner";
 import { BookOpen, Clock, Target, TrendingUp, ArrowRight, RefreshCw, CheckCircle2, XCircle } from "lucide-react";
 
@@ -18,10 +18,7 @@ const Dashboard = () => {
   const fetchUser = async (showToast = false) => {
     try {
       if (showToast) setRefreshing(true);
-      const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/user/me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get("/api/user/me");
       setUserData(res.data);
       if (res.data.email) {
         localStorage.setItem("userEmail", res.data.email);

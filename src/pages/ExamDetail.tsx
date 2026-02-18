@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 
 const ExamDetail = () => {
   const { examId } = useParams();
@@ -14,7 +14,7 @@ const ExamDetail = () => {
   useEffect(() => {
     const fetchExam = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/exams/${examId}`);
+        const res = await api.get(`/api/exams/${examId}`);
         setExam(res.data);
       } catch (err) {
         console.error("Error fetching exam:", err);

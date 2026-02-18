@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,12 +48,8 @@ const AdminUpload = () => {
     useEffect(() => {
         const fetchExams = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/exams");
-                if (Array.isArray(res.data)) {
-                    setExams(res.data);
-                } else {
-                    console.error("Exams data is not an array:", res.data);
-                }
+                const res = await api.get("/api/exams");
+                setExams(res.data);
             } catch (err) {
                 console.error("Error fetching exams:", err);
                 toast.error("Failed to load exams database.");
@@ -153,7 +149,7 @@ const AdminUpload = () => {
         setUploading(true);
 
         try {
-            const res = await axios.post("http://localhost:5000/api/admin/upload-text", {
+            const res = await api.post("/api/admin/upload-text", {
                 examId,
                 year,
                 paperName,
@@ -199,7 +195,7 @@ const AdminUpload = () => {
         setUploading(true);
 
         try {
-            await axios.post(`http://localhost:5000/api/exams/${examId}/questions`, {
+            await api.post(`/api/exams/${examId}/questions`, {
                 year: parseInt(year),
                 question: {
                     text: manualQuestion,
@@ -229,7 +225,7 @@ const AdminUpload = () => {
         if (!examId) return toast.error("Please select an exam first");
         setUploading(true);
         try {
-            await axios.patch(`http://localhost:5000/api/exams/${examId}`, details);
+            await api.patch(`/api/exams/${examId}`, details);
             toast.success("Exam details updated successfully!");
             setExams(prev => prev.map(ex => ex.id === examId ? { ...ex, ...details } : ex));
         } catch (err) {
@@ -272,7 +268,7 @@ const AdminUpload = () => {
                     <button
                         onClick={async () => {
                             try {
-                                const res = await axios.get("http://localhost:5000/api/admin");
+                                const res = await api.get("/api/admin");
                                 if (res.data.includes("Working")) toast.success("Server Connected & Ready!");
                                 else toast.warning("Server responded, but Admin route missing. Restart needed.");
                             } catch (e) {

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import axios from "axios";
+import api from "@/lib/api";
 import { toast } from "sonner";
 import { type Question } from "@/data/exams";
 
@@ -33,7 +33,7 @@ const Practice = () => {
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/exams`);
+        const res = await api.get("/api/exams");
         setAllExams(res.data);
 
         // If exam is specified in URL, pre-select it
@@ -58,7 +58,7 @@ const Practice = () => {
         try {
           const examsData = await Promise.all(
             selectedExams.map(examId =>
-              axios.get(`http://localhost:5000/api/exams/${examId}`)
+              api.get(`/api/exams/${examId}`)
             )
           );
           setExam({

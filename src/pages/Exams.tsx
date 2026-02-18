@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ExamCard from "@/components/ExamCard";
-import axios from "axios";
+import api from "@/lib/api";
 
 const examCategories = ["All", "SSC", "UPSC", "Banking", "Railway", "State PSC", "Defence", "JEE"];
 
@@ -17,7 +17,7 @@ const Exams = () => {
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/exams");
+        const res = await api.get("/api/exams");
         setExams(res.data);
       } catch (err) {
         console.error("Error fetching exams:", err);
