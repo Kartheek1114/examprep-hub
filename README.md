@@ -1,73 +1,47 @@
-# Welcome to your Lovable project
+# Prepnovus - Competitive Exam Preparation Hub
 
-## Project info
+Prepnovus is a comprehensive MERN stack web application designed to help students prepare for competitive exams. It provides a robust platform for practice, topic-wise learning, and performance tracking.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Features
 
-## How can I edit this code?
+- **Topic-wise Practice:** Targeted questions for specific subjects.
+- **Previous Year Questions (PYQ):** Real exam questions to build confidence.
+- **Real-time Analytics:** Track your progress with detailed performance visualizations.
+- **Auth System:** Secure signup, login, and Google OAuth integration.
+- **Admin Dashboard:** Tools for easy question uploads and management.
 
-There are several ways of editing your application.
+## 🛠️ Technology Stack
 
-**Use Lovable**
+- **Frontend:** React, Vite, TypeScript, Tailwind CSS, shadcn/ui.
+- **Backend:** Node.js, Express.
+- **Database:** MongoDB (via Mongoose).
+- **Other:** Axios, Recharts, Lucide React.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 📦 Installation & Local Development
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/Kartheek1114/examprep-hub.git
+   ```
 
-**Use your preferred IDE**
+2. **Frontend Setup:**
+   ```sh
+   cd examprep-hub
+   npm install
+   npm run dev
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Backend Setup:**
+   ```sh
+   cd backend
+   npm install
+   # Create a .env file with MONGO_URI, JWT_SECRET, etc.
+   node server.js
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🌐 Deployment
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The project is designed to be deployed with:
+- **Frontend:** Vercel / Netlify
+- **Backend:** Render / Railway
+- **Database:** MongoDB Atlas
