@@ -36,8 +36,8 @@ router.get('/google/callback',
     passport.authenticate('google', { session: false }),
     (req, res) => {
         const token = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        // Redirect to frontend with token and email
-        res.redirect(`http://localhost:8080/login?token=${token}&email=${req.user.email}`);
+        const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8080';
+        res.redirect(`${FRONTEND_URL}/login?token=${token}&email=${req.user.email}`);
     }
 );
 
