@@ -3,11 +3,35 @@ import { BookOpen, Users, Calendar, TrendingUp, GraduationCap, ArrowRight, Clock
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { exams } from "@/data/exams";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const ExamDetail = () => {
   const { examId } = useParams();
-  const exam = exams.find((e) => e.id === examId);
+  const [exam, setExam] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchExam = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/exams/${examId}`);
+        setExam(res.data);
+      } catch (err) {
+        console.error("Error fetching exam:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExam();
+  }, [examId]);
+
+  if (loading) return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <div className="flex-1 flex items-center justify-center">Loading exam details...</div>
+      <Footer />
+    </div>
+  );
 
   if (!exam) {
     return (
@@ -79,7 +103,27 @@ const ExamDetail = () => {
           </div>
         </section>
 
-        {/* Practice CTA */}
+        {/* Papers Selection */}
+        <section className="container mx-auto px-4 py-12">
+          <h2 className="font-heading text-2xl font-bold mb-6">Select <span className="text-gradient">Paper to Practice</span></h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {exam.previousYearPapers.map((paper, i) => (
+              <div key={i} className="bg-card rounded-xl border border-border p-5 hover-lift shadow-card flex items-center justify-between">
+                <div>
+                  <div className="font-heading font-bold text-lg">{paper.year} Question Paper</div>
+                  <div className="text-sm text-muted-foreground">{paper.questions.length} Questions · Official PYQ</div>
+                </div>
+                <Link to={`/practice?exam=${exam.id}&year=${paper.year}`}>
+                  <Button size="sm" className="gradient-primary text-primary-foreground border-0 shadow-primary-glow">
+                    Practice
+                  </Button>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Practice CTA - Hidden as it's replaced by granular selection, or keep as "Quick Practice" */}
         <section className="container mx-auto px-4 pb-12">
           <div className="bg-card rounded-xl border border-border p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -87,13 +131,13 @@ const ExamDetail = () => {
                 <Clock className="w-7 h-7 text-secondary-foreground" />
               </div>
               <div>
-                <h3 className="font-heading text-xl font-bold">Practice PYQs</h3>
-                <p className="text-muted-foreground text-sm">{totalQuestions} questions available with per-question timer & explanations</p>
+                <h3 className="font-heading text-xl font-bold">Quick Practice</h3>
+                <p className="text-muted-foreground text-sm">Jump into a random mix of {totalQuestions} questions across all years</p>
               </div>
             </div>
             <Link to={`/practice?exam=${exam.id}`}>
               <Button className="gradient-primary text-primary-foreground border-0 shadow-primary-glow hover:opacity-90 gap-2">
-                Start Practice <ArrowRight className="w-4 h-4" />
+                All PYQs <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>

@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ExamCard from "@/components/ExamCard";
-import { exams, examCategories } from "@/data/exams";
+import axios from "axios";
+
+const examCategories = ["All", "SSC", "UPSC", "Banking", "Railway", "State PSC", "Defence", "JEE"];
 
 const Exams = () => {
+  const [exams, setExams] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+
+  useEffect(() => {
+    const fetchExams = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/exams");
+        setExams(res.data);
+      } catch (err) {
+        console.error("Error fetching exams:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchExams();
+  }, []);
 
   const filtered = exams.filter((e) => {
     const matchSearch = e.name.toLowerCase().includes(search.toLowerCase()) || e.shortName.toLowerCase().includes(search.toLowerCase());
@@ -35,9 +53,8 @@ const Exams = () => {
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  category === cat ? "gradient-primary text-primary-foreground shadow-primary-glow" : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${category === cat ? "gradient-primary text-primary-foreground shadow-primary-glow" : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
               >
                 {cat}
               </button>
@@ -45,13 +62,19 @@ const Exams = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((exam) => (
-            <ExamCard key={exam.id} {...exam} />
-          ))}
-        </div>
-        {filtered.length === 0 && (
-          <div className="text-center py-20 text-muted-foreground">No exams found matching your search.</div>
+        {loading ? (
+          <div className="text-center py-20">Loading exams...</div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtered.map((exam) => (
+                <ExamCard key={exam.id} {...exam} />
+              ))}
+            </div>
+            {filtered.length === 0 && (
+              <div className="text-center py-20 text-muted-foreground">No exams found matching your search.</div>
+            )}
+          </>
         )}
       </main>
       <Footer />
