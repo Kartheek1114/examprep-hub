@@ -5,6 +5,7 @@ const passport = require('passport');
 require('dotenv').config();
 
 const app = express();
+app.set('trust proxy', 1); // Trust Render's proxy
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
