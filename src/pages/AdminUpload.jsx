@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { CheckCircle2, Zap, ListPlus, BookOpen, FileText } from "lucide-react";
+import { CheckCircle2, Zap, ListPlus, BookOpen, FileText, PlusCircle } from "lucide-react";
 
 /**
  * AdminUpload Component
@@ -20,8 +20,18 @@ const AdminUpload = () => {
     const [year, setYear] = useState("");
     const [paperName, setPaperName] = useState("");
     const [pastedText, setPastedText] = useState("");
-    const [uploadMode, setUploadMode] = useState("flash"); // 'flash', 'manual', 'json', or 'details'
+    const [uploadMode, setUploadMode] = useState("flash"); // 'flash', 'manual', 'json', 'details', or 'new'
     const [uploading, setUploading] = useState(false);
+
+    // New Exam State
+    const [newExam, setNewExam] = useState({
+        title: "",
+        shortName: "",
+        category: "SSC",
+        description: "",
+        icon: "🏛️",
+        eligibility: ""
+    });
 
     // Manual Entry States
     const [manualQuestion, setManualQuestion] = useState("");
@@ -236,6 +246,26 @@ const AdminUpload = () => {
         }
     };
 
+    // Create New Exam Handler
+    const handleCreateExam = async () => {
+        if (!newExam.title || !newExam.shortName || !newExam.category) {
+            return toast.error("Please fill in basic exam details (Name, Short Name, Category)");
+        }
+        setUploading(true);
+        try {
+            const res = await api.post("/api/admin/create", newExam);
+            toast.success("New exam created successfully!");
+            setExams(prev => [...prev, res.data]);
+            setUploadMode("flash");
+            setExamId(res.data.id);
+        } catch (err) {
+            console.error(err);
+            toast.error(err.response?.data?.error || "Failed to create exam");
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const handleExamChange = (e) => {
         const selectedId = e.target.value;
         setExamId(selectedId);
@@ -322,25 +352,41 @@ const AdminUpload = () => {
                         <FileText className="w-4 h-4" />
                         Details
                     </button>
+                    <button
+                        onClick={() => { setUploadMode("new"); setIsReviewing(false); }}
+                        className={`flex-1 min-w-[45%] sm:min-w-0 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${uploadMode === "new"
+                            ? "bg-card text-primary shadow-sm shadow-primary/10"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                            }`}
+                    >
+                        <PlusCircle className="w-4 h-4" />
+                        New Exam
+                    </button>
                 </div>
 
                 <div className="bg-card rounded-2xl border border-border p-8 shadow-xl shadow-primary/5">
                     <div className="space-y-6">
                         <div className="space-y-2">
                             <Label htmlFor="exam" className="text-foreground/80 font-medium">Target Exam</Label>
-                            <select
-                                id="exam"
-                                className="w-full h-12 px-4 rounded-xl border border-input bg-background text-sm transition-all focus:ring-2 focus:ring-primary/20 hover:border-primary/50"
-                                value={examId}
-                                onChange={handleExamChange}
-                            >
-                                <option value="">Select an exam...</option>
-                                {exams.map((exam) => (
-                                    <option key={exam.id} value={exam.id}>
-                                        {exam.name} ({exam.shortName})
-                                    </option>
-                                ))}
-                            </select>
+                            {uploadMode === "new" ? (
+                                <div className="p-3 bg-muted/30 border border-dashed border-border rounded-xl text-xs text-muted-foreground italic">
+                                    You are creating a new exam entry. Fill the details below.
+                                </div>
+                            ) : (
+                                <select
+                                    id="exam"
+                                    className="w-full h-12 px-4 rounded-xl border border-input bg-background text-sm transition-all focus:ring-2 focus:ring-primary/20 hover:border-primary/50"
+                                    value={examId}
+                                    onChange={handleExamChange}
+                                >
+                                    <option value="">Select an exam...</option>
+                                    {exams.map((exam) => (
+                                        <option key={exam.id} value={exam.id}>
+                                            {exam.name || exam.title} ({exam.shortName})
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                         </div>
 
                         {(uploadMode !== "details") && (
@@ -595,6 +641,83 @@ const AdminUpload = () => {
                                     className="w-full h-14 rounded-xl gradient-primary text-primary-foreground text-lg font-bold shadow-lg shadow-primary/20"
                                 >
                                     {uploading ? "Updating..." : "Save Exam Details"}
+                                </Button>
+                            </div>
+                        )}
+
+                        {/* New Exam Mode UI */}
+                        {uploadMode === "new" && (
+                            <div className="space-y-6 animate-fade-in">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label className="text-foreground/80 font-medium">Exam Full Name</Label>
+                                        <Input
+                                            value={newExam.title}
+                                            onChange={(e) => setNewExam({ ...newExam, title: e.target.value })}
+                                            placeholder="e.g. SSC Combined Graduate Level"
+                                            className="h-11 rounded-xl"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-foreground/80 font-medium">Short Name (ID)</Label>
+                                        <Input
+                                            value={newExam.shortName}
+                                            onChange={(e) => setNewExam({ ...newExam, shortName: e.target.value })}
+                                            placeholder="e.g. SSC CGL"
+                                            className="h-11 rounded-xl"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label className="text-foreground/80 font-medium">Category</Label>
+                                        <select
+                                            className="w-full h-11 px-4 rounded-xl border border-input bg-background text-sm transition-all focus:ring-2 focus:ring-primary/20 hover:border-primary/50"
+                                            value={newExam.category}
+                                            onChange={(e) => setNewExam({ ...newExam, category: e.target.value })}
+                                        >
+                                            <option value="SSC">SSC</option>
+                                            <option value="UPSC">UPSC</option>
+                                            <option value="Banking">Banking</option>
+                                            <option value="Railway">Railway</option>
+                                            <option value="Defence">Defence</option>
+                                            <option value="State PSC">State PSC</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-foreground/80 font-medium">Icon (Emoji)</Label>
+                                        <Input
+                                            value={newExam.icon}
+                                            onChange={(e) => setNewExam({ ...newExam, icon: e.target.value })}
+                                            placeholder="e.g. 🏛️"
+                                            className="h-11 rounded-xl"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-foreground/80 font-medium">Eligibility</Label>
+                                    <Input
+                                        value={newExam.eligibility}
+                                        onChange={(e) => setNewExam({ ...newExam, eligibility: e.target.value })}
+                                        placeholder="e.g. Graduate from recognized university"
+                                        className="h-11 rounded-xl"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-foreground/80 font-medium">Description</Label>
+                                    <textarea
+                                        value={newExam.description}
+                                        onChange={(e) => setNewExam({ ...newExam, description: e.target.value })}
+                                        className="w-full p-4 rounded-xl border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 leading-relaxed transition-all resize-none hover:border-primary/50 min-h-[100px]"
+                                        placeholder="Add a brief description of the exam..."
+                                    />
+                                </div>
+                                <Button
+                                    onClick={handleCreateExam}
+                                    disabled={uploading}
+                                    className="w-full h-14 rounded-xl gradient-primary text-black text-lg font-bold shadow-lg shadow-primary/20"
+                                >
+                                    {uploading ? "Creating..." : "Create New Exam Entry"}
                                 </Button>
                             </div>
                         )}
