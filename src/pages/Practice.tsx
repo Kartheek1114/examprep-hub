@@ -509,13 +509,18 @@ const Practice = () => {
 
               <div className="grid gap-4">
                 {currentQ.options.map((opt, i) => {
-                  let optionClass = "bg-background border border-border hover:border-primary hover:bg-primary/5 cursor-pointer";
+                  let optionClass = "bg-background border border-border";
+
                   if (showResult) {
                     if (i === currentQ.correctAnswer) optionClass = "bg-emerald-500/10 border-emerald-500 text-emerald-900";
                     else if (i === selectedAnswer) optionClass = "bg-rose-500/10 border-rose-500 text-rose-900";
                     else optionClass = "bg-background border border-border opacity-40";
                   } else if (selectedAnswer === i) {
                     optionClass = "gradient-primary text-primary-foreground border-transparent shadow-lg shadow-primary/20 scale-[1.02]";
+                  } else if (selectedAnswer === null) {
+                    optionClass += " hover:border-primary hover:bg-primary/5 cursor-pointer";
+                  } else {
+                    optionClass += " cursor-default";
                   }
 
                   return (
