@@ -161,4 +161,62 @@ router.post('/upload-text', async (req, res) => {
     }
 });
 
+// Middleware to protect routes and check admin
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const adminAuth = async (req, res, next) => {
+    try {
+        const token = req.header('Authorization')?.replace('Bearer ', '');
+        if (!token) return res.status(401).send({ error: 'No authentication token provided' });
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user) return res.status(401).send({ error: 'User not found' });
+
+        // Check if user is admin
+        const adminEmail = "kartheek04112004@gmail.com";
+        if (user.email.toLowerCase().trim() !== adminEmail.toLowerCase().trim()) {
+            return res.status(403).send({ error: 'Access denied. Admin only.' });
+        }
+
+        req.user = user;
+        next();
+    } catch (e) {
+        return res.status(401).send({ error: 'Authentication failed' });
+    }
+};
+
+// Create a new exam
+router.post('/create', adminAuth, async (req, res) => {
+    try {
+        const { title, category, shortName, description, icon, eligibility } = req.body;
+
+        // Map shortName to id
+        const id = shortName.toLowerCase().replace(/\s+/g, '-');
+
+        const exam = new Exam({
+            id,
+            name: title,
+            category,
+            shortName,
+            description,
+            icon,
+            eligibility,
+            previousYearPapers: [],
+            syllabus: []
+        });
+
+        await exam.save();
+        res.status(201).json(exam);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Admin health check
+router.get('/', adminAuth, async (req, res) => {
+    res.send("Working: Admin routes connected");
+});
+
 module.exports = router;
