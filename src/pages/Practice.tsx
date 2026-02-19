@@ -297,7 +297,7 @@ const Practice = () => {
             <Button
               onClick={handleStartPractice}
               disabled={selectedExams.length === 0}
-              className="gradient-primary text-primary-foreground border-0 gap-2 px-8 py-3 text-lg shadow-lg shadow-primary/20"
+              className="gradient-primary text-black border-0 gap-2 px-8 py-3 text-lg shadow-lg shadow-primary/20"
             >
               Start Practice <ChevronRight className="w-5 h-5" />
             </Button>
@@ -403,7 +403,7 @@ const Practice = () => {
           <div className="flex gap-3 justify-center flex-wrap">
             <Button onClick={handleRestart} variant="outline" className="gap-2"><RotateCcw className="w-4 h-4" />Restart</Button>
             <Button onClick={() => { setPracticeModeActive(false); setFinished(false); }} variant="outline" className="gap-2">Select Different Exams</Button>
-            <Link to="/exams"><Button className="gradient-primary text-primary-foreground border-0 gap-2">More Exams <ChevronRight className="w-4 h-4" /></Button></Link>
+            <Link to="/exams"><Button className="gradient-primary text-black border-0 gap-2">More Exams <ChevronRight className="w-4 h-4" /></Button></Link>
           </div>
         </main>
         <Footer />
@@ -516,7 +516,7 @@ const Practice = () => {
                     else if (i === selectedAnswer) optionClass = "bg-rose-500/10 border-rose-500 text-rose-900";
                     else optionClass = "bg-background border border-border opacity-40";
                   } else if (selectedAnswer === i) {
-                    optionClass = "gradient-primary text-primary-foreground border-transparent shadow-lg shadow-primary/20 scale-[1.02]";
+                    optionClass = "gradient-primary text-black border-transparent shadow-lg shadow-primary/20 scale-[1.02]";
                   } else if (selectedAnswer === null) {
                     optionClass += " hover:border-primary hover:bg-primary/5 cursor-pointer";
                   } else {
@@ -529,7 +529,7 @@ const Practice = () => {
                       onClick={() => handleAnswer(i)}
                       className={`w-full text-left px-6 py-5 rounded-2xl flex items-center gap-4 transition-all duration-300 font-medium ${optionClass}`}
                     >
-                      <span className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 transition-colors ${selectedAnswer === i && !showResult ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                      <span className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 transition-colors ${selectedAnswer === i && !showResult ? "bg-black/10 text-black" : "bg-muted text-muted-foreground"
                         }`}>
                         {String.fromCharCode(65 + i)}
                       </span>
@@ -554,7 +554,7 @@ const Practice = () => {
 
             <div className="flex justify-end gap-3">
               {!showResult ? (
-                <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="h-14 px-8 rounded-2xl gradient-primary text-primary-foreground border-0 shadow-lg shadow-primary/20 hover:opacity-90 gap-2 text-lg font-bold transition-all hover:scale-[1.02] active:scale-[0.98]">
+                <Button onClick={handleSubmitAnswer} disabled={selectedAnswer === null} className="h-14 px-8 rounded-2xl gradient-primary text-black border-0 shadow-lg shadow-primary/20 hover:opacity-90 gap-2 text-lg font-bold transition-all hover:scale-[1.02] active:scale-[0.98]">
                   Submit Answer
                 </Button>
               ) : (

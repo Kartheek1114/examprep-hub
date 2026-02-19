@@ -156,7 +156,7 @@ const Header = () => {
               key={item.path}
               to={item.path}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.pathname === item.path
-                ? "gradient-primary text-primary-foreground shadow-primary-glow"
+                ? "gradient-primary text-black shadow-primary-glow"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
             >
@@ -175,7 +175,7 @@ const Header = () => {
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button size="sm" className="gradient-primary text-primary-foreground border-0 shadow-primary-glow hover:opacity-90 transition-opacity">
+                <Button size="sm" className="gradient-primary text-black border-0 shadow-primary-glow hover:opacity-90 transition-opacity">
                   Sign Up Free
                 </Button>
               </Link>
@@ -234,7 +234,7 @@ const Header = () => {
                                 <User className="w-10 h-10 text-muted-foreground" />
                               )}
                             </div>
-                            <label className="absolute bottom-0 right-0 p-1.5 rounded-full gradient-primary text-primary-foreground cursor-pointer shadow-lg hover:scale-110 transition-transform">
+                            <label className="absolute bottom-0 right-0 p-1.5 rounded-full gradient-primary text-black cursor-pointer shadow-lg hover:scale-110 transition-transform">
                               <Camera className="w-3 h-3" />
                               <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                             </label>
@@ -271,7 +271,7 @@ const Header = () => {
                         </div>
 
                         <div className="flex gap-2 pt-2">
-                          <Button type="submit" size="sm" className="gradient-primary text-primary-foreground border-0 shadow-primary-glow gap-1.5 flex-1">
+                          <Button type="submit" size="sm" className="gradient-primary text-black border-0 shadow-primary-glow gap-1.5 flex-1">
                             <Save className="w-3 h-3" /> Save
                           </Button>
                           <Button type="button" size="sm" variant="outline" onClick={() => {
@@ -331,7 +331,7 @@ const Header = () => {
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
                 className={`px-4 py-3 rounded-xl text-sm font-bold transition-all ${location.pathname === item.path
-                  ? "gradient-primary text-primary-foreground shadow-primary-glow"
+                  ? "gradient-primary text-black shadow-primary-glow"
                   : "text-muted-foreground hover:bg-muted"
                   }`}
               >
@@ -345,7 +345,7 @@ const Header = () => {
                     <Button variant="outline" className="w-full h-12 rounded-xl">Login</Button>
                   </Link>
                   <Link to="/signup" className="w-full" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full h-12 rounded-xl gradient-primary text-primary-foreground border-0 shadow-primary-glow">Sign Up Free</Button>
+                    <Button className="w-full h-12 rounded-xl gradient-primary text-black border-0 shadow-primary-glow">Sign Up Free</Button>
                   </Link>
                 </div>
               ) : (
