@@ -3,7 +3,7 @@ import { BookOpen, Menu, X, User, LogOut, Camera, Save, Settings } from "lucide-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
+import api from "@/lib/api";
 import { toast } from "sonner";
 
 const navItems = [
@@ -51,10 +51,7 @@ const Header = () => {
 
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/user/me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get("/api/user/me");
       setUserData(res.data);
       setName(res.data.name);
       setProfilePic(res.data.profilePicture || "");
@@ -78,14 +75,10 @@ const Header = () => {
     }
 
     try {
-      const token = localStorage.getItem("token");
-
       // Show loading state
       const updatePayload = { name: name.trim(), profilePicture: profilePic };
 
-      const res = await axios.patch("http://localhost:5000/api/user/me", updatePayload,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.patch("/api/user/me", updatePayload);
 
       setUserData(res.data);
       toast.success("Profile updated successfully!");
