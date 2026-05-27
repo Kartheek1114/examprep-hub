@@ -1,0 +1,363 @@
+.career-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  place-items: center;
+  justify-content: center;
+  position: relative;
+  opacity: 1;
+  height: auto;
+  margin: auto;
+  margin-top: 8vh;
+  margin-bottom: 15vh;
+  padding: 80px 0px;
+  gap: 80px;
+  overflow: visible;
+}
+
+.career-container {
+  width: 1000px;
+  overflow: visible;
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+.career-section h2 {
+  font-size: 70px;
+  line-height: 70px;
+  font-weight: 400;
+  text-align: center;
+  background: linear-gradient(0deg, #7f40ff, #ffffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-top: 50px;
+  margin-bottom: 90px;
+}
+
+.career-section h2>span {
+  font-family: "Geist", sans-serif;
+  font-weight: 300;
+}
+
+.career-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0px auto;
+}
+
+.career-info-box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.career-info-box p {
+  width: 40%;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  line-height: 20px;
+  color: #fff;
+}
+
+.career-info-in {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.career-info h3 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: 500;
+  line-height: inherit;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.career-info h4 {
+  font-size: 33px;
+  line-height: 30px;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  margin: 0;
+  color: #fff;
+}
+
+.career-info h5 {
+  font-weight: 400;
+  letter-spacing: 0.7px;
+  font-size: 20px;
+  text-transform: capitalize;
+  margin: 10px 0px;
+  color: var(--accentColor);
+}
+
+.career-timeline {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 100%;
+  background-image: linear-gradient(to top,
+      #aa42ff 20%,
+      var(--accentColor) 50%,
+      transparent 95%);
+  max-height: 0%;
+}
+
+.career-dot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background-color: #aa42ff;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  box-shadow: 0px 0px 5px 2px #d29bff, 0px 0px 15px 8px #d097ff,
+    0px 0px 110px 20px #f2c0ff;
+  animation: timeline 0.8s linear infinite forwards;
+}
+
+@keyframes timeline {
+
+  10%,
+  20%,
+  50%,
+  70%,
+  90% {
+    box-shadow: 0px 0px 5px 2px #d29bff;
+  }
+
+  10%,
+  30%,
+  0%,
+  100%,
+  64%,
+  80% {
+    box-shadow: 0px 0px 5px 2px #d29bff, 0px 0px 15px 5px #d097ff,
+      0px 0px 110px 20px #f2c0ff;
+  }
+}
+
+@keyframes timeline2 {
+  0% {
+    box-shadow: 0px 0px 5px 2px #d29bff;
+  }
+
+  100% {
+    box-shadow: 0px 0px 5px 2px #d29bff, 0px 0px 15px 5px #d097ff,
+      0px 0px 110px 20px #f2c0ff;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .career-section h2 {
+    font-size: 50px;
+    line-height: 50px;
+  }
+
+  .career-info h4 {
+    font-size: 22px;
+    line-height: 24px;
+    width: 180px;
+  }
+
+  .career-info h5 {
+    font-size: 17px;
+  }
+
+  .career-info h3 {
+    font-size: 40px;
+  }
+
+  .career-info-box p {
+    font-size: 14px;
+  }
+
+  .career-info-in {
+    width: 45%;
+    gap: 20px;
+  }
+
+  .career-info-box p {
+    width: 45%;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+  .career-section h2 {
+    font-size: 42px;
+    line-height: 44px;
+  }
+
+  .career-info h3 {
+    font-size: 36px;
+  }
+
+  .career-info h4 {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .career-section h2 {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .career-info h3 {
+    font-size: 38px;
+  }
+}
+
+@media only screen and (max-width: 1025px) {
+  .career-section {
+    padding: 70px 0px;
+    padding-top: 100px;
+    margin-top: 0px;
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .career-info-box {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 70px;
+  }
+
+  .career-info-in,
+  .career-info-box p {
+    width: 100%;
+    padding-left: 10%;
+    box-sizing: border-box;
+  }
+
+  .career-timeline {
+    left: 0%;
+  }
+
+  .career-container {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .career-info {
+    margin: 0;
+  }
+
+  .career-section h2 {
+    width: 100%;
+    font-size: 45px;
+    line-height: 45px;
+    margin-top: 0px;
+  }
+
+  .career-info-in {
+    gap: 0px;
+  }
+
+  .career-info h3 {
+    font-size: 33px;
+  }
+
+  .career-info-in,
+  .career-info-box p {
+    padding-left: 5%;
+  }
+
+  .career-section {
+    padding-top: 90px;
+    margin-top: 0px;
+
+    align-items: start;
+    place-items: inherit;
+    justify-content: left;
+  }
+}
+
+.cert-hover-box {
+  position: relative;
+}
+
+.cert-image-preview {
+  position: absolute;
+  top: 50%;
+  left: 60%; /* Move it back to the right side of the text */
+  transform: translateY(-50%) scale(0.8);
+  width: 550px; /* Made it slightly bigger to match premium feel */
+  height: 400px;
+  background: #fff;
+  border: 4px solid var(--accentColor);
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 2000; /* Increased z-index to stay on top of everything */
+  margin-left: 40px; /* Stronger gap to prevent overlap with the date */
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(127, 64, 255, 0.3);
+}
+
+.cert-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensure full certificate is visible */
+  background: #fff; /* White background for certificates */
+}
+
+.cert-hover-box:hover .cert-image-preview {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Specific fix for the last item to prevent bottom overflow */
+.cert-hover-box:last-child .cert-image-preview {
+  top: -70%;
+  bottom: 0;
+  transform: translateY(0) scale(0.8);
+}
+
+.cert-hover-box:last-child:hover .cert-image-preview {
+  transform: translateY(0) scale(1);
+}
+
+.cert-hover-box:hover .career-info-in {
+  opacity: 0.4;
+}
+
+/* Fix for mobile/smaller screens to keep preview on screen */
+@media only screen and (max-width: 1200px) {
+  .cert-image-preview {
+    left: 50%;
+    top: -100%;
+    transform: translate(-50%, 0) scale(0.8);
+    width: 90vw;
+    height: auto;
+    aspect-ratio: 4/3;
+    margin-left: 0;
+  }
+
+  .cert-hover-box:hover .cert-image-preview {
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  /* Reset the last-child fix for mobile */
+  .cert-hover-box:last-child .cert-image-preview {
+    top: -100%;
+    bottom: auto;
+    transform: translate(-50%, 0) scale(0.8);
+  }
+
+  .cert-hover-box:last-child:hover .cert-image-preview {
+    transform: translate(-50%, 0) scale(1);
+  }
+}

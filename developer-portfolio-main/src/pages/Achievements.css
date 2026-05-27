@@ -1,0 +1,68 @@
+.achievements-page {
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  padding: 80px 20px;
+  overflow-x: hidden;
+}
+
+.achievements-page .back-button {
+  color: var(--accentColor);
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  display: inline-block;
+  transition: .3s;
+}
+
+.achievements-page .back-button:hover {
+  transform: translateX(-5px);
+  color: #fff;
+}
+
+.achievements-page .page-header h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: linear-gradient(to bottom, #fff, var(--accentColor));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.achievements-page h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 50px;
+  color: #fff;
+}
+
+.achievements-page h2 span {
+  color: var(--accentColor);
+}
+
+.achievements-page .mb-100 {
+  margin-bottom: 100px;
+}
+
+/* Reusing and adjusting the career-info-box from Career.css */
+.achievements-page .career-info-box {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: .4s;
+}
+
+.achievements-page .career-info-box:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accentColor);
+}
+
+.achievements-page .text-accent {
+  color: var(--accentColor);
+}
+
+@media (max-width: 768px) {
+  .achievements-page .career-info-in {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+} 
