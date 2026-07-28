@@ -21,7 +21,7 @@ export const config = {
             company: "Lovely Professional University",
             period: "Aug’ 23 – Present",
             location: "Phagwara, Punjab",
-            description: "Computer Science and Engineering. CGPA: 7.37.",
+            description: "Computer Science and Engineering. CGPA: 7.45.",
             responsibilities: [
                 "Focusing on Computer Science fundamentals",
                 "Participating in technical workshops and coding camps"
